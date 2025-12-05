@@ -3,6 +3,7 @@ from pygame.locals import *
 import sys
 
 pygame.init()
+close_btn = pygame.image.load("./assets/close.png")
 screen = pygame.display.set_mode((0, 0))
 clock = pygame.time.Clock()
 BLACK = (0, 0, 0)
@@ -11,7 +12,7 @@ objects = []
 running = True
 
 class Button():
-    def __init__(self, x, y, width, height, buttonText='Button', onclickFunction=None, onePress=False):
+    def __init__(self, x, y, width, height, ButtonContent='Button', onclickFunction=None, onePress=False):
         self.x = x
         self.y = y
         self.width = width
@@ -29,7 +30,10 @@ class Button():
         self.buttonSurface = pygame.Surface((self.width, self.height))
         self.buttonRect = pygame.Rect(self.x, self.y, self.width, self.height)
 
-        self.buttonSurf = font.render(buttonText, True, (20, 20, 20))
+        if type(ButtonContent) == str:
+            self.buttonSurf = font.render(ButtonContent, True, (20, 20, 20))
+        else:
+            self.buttonSurf = ButtonContent
 
         objects.append(self)
     
@@ -58,7 +62,7 @@ def close_game():
     pygame.quit()
     sys.exit()
 
-Button(30, 30, 400, 100, "exit", close_game)
+Button(50, 30, 500, 500, close_btn, close_game)
 
 while running:
     clock.tick(60)
